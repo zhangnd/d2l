@@ -38,7 +38,7 @@ def main():
     num_examples = 1000
     true_w = [2, -3.4]
     true_b = 4.2
-    features = torch.from_numpy(np.random.normal(0, 1, (num_examples, num_inputs)))
+    features = torch.from_numpy(np.random.normal(0, 1, (num_examples, num_inputs)).astype(np.float32))
     labels = true_w[0] * features[:, 0] + true_w[1] * features[:, 1] + true_b
     labels += torch.from_numpy(np.random.normal(0, 0.01, size=labels.size()))  # 噪声项ε服从均值为0、标准差为0.01的正太分布
 
@@ -48,8 +48,8 @@ def main():
 
     # 初始化模型参数
     # 将权重初始化成均值为0、标准差为0.01的正太随机数，偏差则初始化为0
-    w = torch.tensor(np.random.normal(0, 0.01, (num_inputs, 1)), requires_grad=True)
-    b = torch.zeros(1, requires_grad=True)
+    w = torch.tensor(np.random.normal(0, 0.01, (num_inputs, 1)), dtype=torch.float32, requires_grad=True)
+    b = torch.zeros(1, dtype=torch.float32, requires_grad=True)
 
     batch_size = 10
     lr = 0.03  # 学习率
